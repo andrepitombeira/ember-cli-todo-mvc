@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.ArrayController.extend({
+    active:    Ember.computed.filterBy('@this', 'isCompleted', false),
+
     remaining: function() {
         return this.filterBy('isCompleted', false).get('length');
     }.property('@each.isCompleted'),
@@ -51,6 +53,6 @@ export default Ember.ArrayController.extend({
             var completed = this.filterBy('isCompleted', true);
             completed.invoke('deleteRecord');
             completed.invoke('save');
-        },
+        }
     }
 });

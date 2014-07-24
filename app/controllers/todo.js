@@ -1,7 +1,12 @@
 import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
+    needs: ['todos'],
     isEditing: false,
+    _onlyOneActive: Ember.computed.equal('controllers.todos.active.length', 1),
+    _isNotCompleted: Ember.computed.not('isCompleted'),
+
+    isLastRemaining: Ember.computed.and('_isNotCompleted', '_onlyOneActive'),
 
     isCompleted: function(key, value) {
         var model = this.get('model');
@@ -21,7 +26,6 @@ export default Ember.ObjectController.extend({
         editTodo: function() {
             this.set('isEditing', true);
         },
-
 
         acceptChanges: function() {
             this.set('isEditing', false);
